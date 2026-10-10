@@ -70,6 +70,24 @@ services:
     depends_on:
       - db
 
+  api-recoleccion:
+    build:
+      context: .
+      dockerfile: api-recoleccion/Dockerfile
+    container_name: sigeru-api-recoleccion
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: root
+      DB_NAME: sigeru
+    volumes:
+      - php_sessions:/var/lib/php/sessions
+    ports:
+      - "8004:80"
+    depends_on:
+      - db
+
   frontend:
     build: ./frontend-backoffice
     container_name: sigeru-frontend

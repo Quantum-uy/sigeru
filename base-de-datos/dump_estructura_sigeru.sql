@@ -188,6 +188,23 @@ CREATE TABLE `mantenimiento` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `mantenimiento_camion`
+--
+
+DROP TABLE IF EXISTS `mantenimiento_camion`;
+CREATE TABLE `mantenimiento_camion` (
+  `id_mantenimiento` int(11) NOT NULL AUTO_INCREMENT,
+  `id_camion` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `tipo` varchar(50) DEFAULT NULL,
+  `descripcion` text DEFAULT NULL,
+  `estado` varchar(30) NOT NULL DEFAULT 'pendiente',
+  PRIMARY KEY (`id_mantenimiento`),
+  KEY `id_camion` (`id_camion`),
+  CONSTRAINT `mant_camion_fk1` FOREIGN KEY (`id_camion`) REFERENCES `camion` (`id_camion`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
 -- Table structure for table `maquinaria`
 --
 
