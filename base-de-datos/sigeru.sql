@@ -266,6 +266,35 @@ LOCK TABLES `mantenimiento` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `mantenimiento_camion`
+--
+
+DROP TABLE IF EXISTS `mantenimiento_camion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mantenimiento_camion` (
+  `id_mantenimiento` int(11) NOT NULL AUTO_INCREMENT,
+  `id_camion` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `tipo` varchar(50) DEFAULT NULL,
+  `descripcion` text DEFAULT NULL,
+  `estado` varchar(30) NOT NULL DEFAULT 'pendiente',
+  PRIMARY KEY (`id_mantenimiento`),
+  KEY `id_camion` (`id_camion`),
+  CONSTRAINT `mant_camion_fk1` FOREIGN KEY (`id_camion`) REFERENCES `camion` (`id_camion`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mantenimiento_camion`
+--
+
+LOCK TABLES `mantenimiento_camion` WRITE;
+/*!40000 ALTER TABLE `mantenimiento_camion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mantenimiento_camion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `maquinaria`
 --
 
