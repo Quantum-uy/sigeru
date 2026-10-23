@@ -294,10 +294,13 @@ CREATE TABLE `ruta` (
   `descripcion` text DEFAULT NULL,
   `color` varchar(20) NOT NULL DEFAULT '#1a5c52',
   `estado` varchar(20) NOT NULL DEFAULT 'activa',
+  `id_centro_destino` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_ruta`),
   KEY `id_conductor` (`id_conductor`),
   KEY `fk_ruta_camion` (`id_camion`),
+  KEY `fk_ruta_centro` (`id_centro_destino`),
   CONSTRAINT `fk_ruta_camion` FOREIGN KEY (`id_camion`) REFERENCES `camion` (`id_camion`) ON DELETE SET NULL,
+  CONSTRAINT `fk_ruta_centro` FOREIGN KEY (`id_centro_destino`) REFERENCES `centro_acopio` (`id_centro`) ON DELETE SET NULL,
   CONSTRAINT `ruta_ibfk_1` FOREIGN KEY (`id_conductor`) REFERENCES `conductor` (`id_usuario`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

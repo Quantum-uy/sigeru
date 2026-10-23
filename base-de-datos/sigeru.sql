@@ -423,10 +423,13 @@ CREATE TABLE `ruta` (
   `descripcion` text DEFAULT NULL,
   `color` varchar(20) NOT NULL DEFAULT '#1a5c52',
   `estado` varchar(20) NOT NULL DEFAULT 'activa',
+  `id_centro_destino` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_ruta`),
   KEY `id_conductor` (`id_conductor`),
   KEY `fk_ruta_camion` (`id_camion`),
+  KEY `fk_ruta_centro` (`id_centro_destino`),
   CONSTRAINT `fk_ruta_camion` FOREIGN KEY (`id_camion`) REFERENCES `camion` (`id_camion`) ON DELETE SET NULL,
+  CONSTRAINT `fk_ruta_centro` FOREIGN KEY (`id_centro_destino`) REFERENCES `centro_acopio` (`id_centro`) ON DELETE SET NULL,
   CONSTRAINT `ruta_ibfk_1` FOREIGN KEY (`id_conductor`) REFERENCES `conductor` (`id_usuario`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -437,7 +440,7 @@ CREATE TABLE `ruta` (
 
 LOCK TABLES `ruta` WRITE;
 /*!40000 ALTER TABLE `ruta` DISABLE KEYS */;
-INSERT INTO `ruta` VALUES (1,3,2,'Ruta Centro','Centro / Cordon / Palermo',1,'Recorrido diario zona centro de Montevideo','#1a5c52','activa'),(2,NULL,NULL,'Ruta Costera','Pocitos / Buceo / Punta Carretas',1,'Recorrido zona costera este','#2a7a6e','activa'),(3,12,4,'Ruta Norte','Aguada / Ciudad Vieja / Tres Cruces',1,'Recorrido zona norte y puerto','#3d6b59','activa'),(8,NULL,NULL,'Ruta Test','Centro',1,'Ruta de prueba','#1a5c52','activa'),(9,NULL,NULL,'Ruta Test','Centro',1,'Ruta de prueba','#1a5c52','activa');
+INSERT INTO `ruta` VALUES (1,3,2,'Ruta Centro','Centro / Cordon / Palermo',1,'Recorrido diario zona centro de Montevideo','#1a5c52','activa',1),(2,NULL,NULL,'Ruta Costera','Pocitos / Buceo / Punta Carretas',1,'Recorrido zona costera este','#2a7a6e','activa',2),(3,12,4,'Ruta Norte','Aguada / Ciudad Vieja / Tres Cruces',1,'Recorrido zona norte y puerto','#3d6b59','activa',NULL),(8,NULL,NULL,'Ruta Test','Centro',1,'Ruta de prueba','#1a5c52','activa',NULL),(9,NULL,NULL,'Ruta Test','Centro',1,'Ruta de prueba','#1a5c52','activa',NULL);
 /*!40000 ALTER TABLE `ruta` ENABLE KEYS */;
 UNLOCK TABLES;
 
