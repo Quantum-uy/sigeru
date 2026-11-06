@@ -1,107 +1,67 @@
-version: "3.8"
-
 services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sigeru_app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT}:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASS: ${MYSQL_PASSWORD}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sigeru_net
 
   db:
     image: mysql:8.0
-    container_name: sigeru-db
+    container_name: sigeru_db
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sigeru
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./base-de-datos/dump_estructura_sigeru.sql:/docker-entrypoint-initdb.d/01-estructura.sql
-      - ./base-de-datos/sigeru.sql:/docker-entrypoint-initdb.d/02-datos.sql
-      - db_data:/var/lib/mysql
-    ports:
-      - "3307:3306"
+      - mysql_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - sigeru_net
 
-  api-usuarios:
-    build:
-      context: .
-      dockerfile: api-usuarios/Dockerfile
-    container_name: sigeru-api-usuarios
+  backup:
+    build: ./backup
+    container_name: sigeru_backup
     restart: unless-stopped
     environment:
-      DB_HOST: db
-      DB_USER: root
-      DB_PASS: root
-      DB_NAME: sigeru
+      MYSQL_HOST: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - php_sessions:/var/lib/php/sessions
-    ports:
-      - "8001:80"
+      - backup_data:/backups
+      - ./:/source_app:ro
     depends_on:
-      - db
-
-  api-camiones:
-    build:
-      context: .
-      dockerfile: api-camiones/Dockerfile
-    container_name: sigeru-api-camiones
-    restart: unless-stopped
-    environment:
-      DB_HOST: db
-      DB_USER: root
-      DB_PASS: root
-      DB_NAME: sigeru
-    volumes:
-      - php_sessions:/var/lib/php/sessions
-    ports:
-      - "8002:80"
-    depends_on:
-      - db
-
-  api-gestion:
-    build:
-      context: .
-      dockerfile: api-gestion/Dockerfile
-    container_name: sigeru-api-gestion
-    restart: unless-stopped
-    environment:
-      DB_HOST: db
-      DB_USER: root
-      DB_PASS: root
-      DB_NAME: sigeru
-    volumes:
-      - php_sessions:/var/lib/php/sessions
-    ports:
-      - "8003:80"
-    depends_on:
-      - db
-
-  api-recoleccion:
-    build:
-      context: .
-      dockerfile: api-recoleccion/Dockerfile
-    container_name: sigeru-api-recoleccion
-    restart: unless-stopped
-    environment:
-      DB_HOST: db
-      DB_USER: root
-      DB_PASS: root
-      DB_NAME: sigeru
-    volumes:
-      - php_sessions:/var/lib/php/sessions
-    ports:
-      - "8004:80"
-    depends_on:
-      - db
-
-  frontend:
-    build: ./frontend-backoffice
-    container_name: sigeru-frontend
-    restart: unless-stopped
-    ports:
-      - "8080:80"
-
-  landing:
-    build: ./landing-page
-    container_name: sigeru-landing
-    restart: unless-stopped
-    ports:
-      - "8000:80"
+      db:
+        condition: service_healthy
+    networks:
+      - sigeru_net
 
 volumes:
-  db_data:
-  php_sessions:
+  mysql_data:
+  backup_data:
+
+networks:
+  sigeru_net:
+    driver: bridge

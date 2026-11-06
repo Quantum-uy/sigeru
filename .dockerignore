@@ -1,0 +1,9 @@
+**/.git
+.env
+backup/
+db/
+docker-compose.yml
+Dockerfile
+*.log
+scripts-so/
+tests/

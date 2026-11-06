@@ -1,0 +1,21 @@
+[submodule "api-usuarios"]
+	path = api-usuarios
+	url = https://github.com/Quantum-uy/api-usuarios.git
+[submodule "api-camiones"]
+	path = api-camiones
+	url = https://github.com/Quantum-uy/api-camiones.git
+[submodule "api-gestion"]
+	path = api-gestion
+	url = https://github.com/Quantum-uy/api-gestion.git
+[submodule "api-recoleccion"]
+	path = api-recoleccion
+	url = https://github.com/Quantum-uy/api-recoleccion.git
+[submodule "frontend-backoffice"]
+	path = frontend-backoffice
+	url = https://github.com/Quantum-uy/frontend-backoffice.git
+[submodule "landing-page"]
+	path = landing-page
+	url = https://github.com/Quantum-uy/landing-page.git
+[submodule "scripts-so"]
+	path = scripts-so
+	url = https://github.com/Quantum-uy/scripts-so.git
