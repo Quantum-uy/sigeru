@@ -464,7 +464,7 @@ CREATE TABLE `tipo_residuo` (
 
 LOCK TABLES `tipo_residuo` WRITE;
 /*!40000 ALTER TABLE `tipo_residuo` DISABLE KEYS */;
-INSERT INTO `tipo_residuo` VALUES (1,'Org├ínico'),(2,'Pl├ístico'),(3,'Vidrio'),(4,'Papel/Cart├│n'),(5,'Metal'),(6,'Electr├│nico'),(7,'Reciclable');
+INSERT INTO `tipo_residuo` VALUES (1,'Orgánico'),(2,'Plástico'),(3,'Vidrio'),(4,'Papel/Cartón'),(5,'Metal'),(6,'Electrónico'),(7,'Reciclable');
 /*!40000 ALTER TABLE `tipo_residuo` ENABLE KEYS */;
 UNLOCK TABLES;
 
