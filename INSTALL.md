@@ -18,6 +18,18 @@ docker-compose --version    # o: docker compose version
 Si falta Docker: `curl -fsSL https://get.docker.com | sudo sh` y `sudo apt install -y docker-compose`.
 En Docker moderno usar `docker compose` (sin guion) en lugar de `docker-compose`.
 
+## 1.1 Verificar la red (antes de clonar)
+
+```bash
+ip -br addr                              # debe mostrar una IP
+ip route                                 # debe haber "default via ..."
+ping -c 2 8.8.8.8                        # salida a internet
+curl -sI https://github.com | head -1    # DNS + HTTPS: debe responder HTTP/2 200
+```
+
+Si el ping funciona pero `curl` falla, hay un proxy o filtro en la red: configurar el proxy para `git` (`git config --global http.proxy http://HOST:PUERTO`) y para Docker, o consultar a los docentes.
+En VirtualBox conviene usar el adaptador en **NAT**: la VM sale a internet por la PC anfitriona y se accede al sitio con reenvío de puertos (`localhost:8080`).
+
 ## 2. Obtener el código
 
 ```bash
