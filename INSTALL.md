@@ -46,9 +46,9 @@ Esperar a que `sigeru_db` figure como `healthy`. La estructura y los datos de pr
 | Rol | Email | Contraseña |
 |---|---|---|
 | Administrador | admin@sigeru.uy | admin123 |
-| Operario | operario@sigeru.uy | test1234 |
-| Conductor | conductor.test@sigeru.uy | test1234 |
-| Peón | peon@sigeru.uy | test1234 |
+| Operario | carlos@sigeru.uy | test1234 |
+| Conductor | martin@sigeru.uy | test1234 |
+| Peón | diego@sigeru.uy | test1234 |
 
 Base de datos (tablas y datos):
 
