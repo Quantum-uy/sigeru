@@ -43,6 +43,12 @@ El archivo `.env` (credenciales y puerto) viene en el repositorio. Editarlo si s
 
 ## 3. Construir y levantar
 
+Si el equipo ya tuvo el sistema instalado, borrar antes lo anterior (incluidos los volúmenes); si no, la base conserva datos viejos y no carga `db/init.sql`:
+
+```bash
+sudo docker-compose down -v
+```
+
 ```bash
 sudo docker-compose up -d --build
 sudo docker-compose ps
